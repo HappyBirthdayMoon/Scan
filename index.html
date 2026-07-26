@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Image Teleporter</title>
+
+    <!-- 1. Load A-Frame and MindAR -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+    <script>
+      // 2. Wait for the page to load
+      document.addEventListener("DOMContentLoaded", function() {
+        
+        // Target the specific element we want to track
+        const targetElement = document.querySelector('#my-image-target');
+
+        // 3. Listen for the 'targetFound' event
+        targetElement.addEventListener("targetFound", event => {
+            console.log("Image found! Teleporting...");
+            
+            // Redirect to your desired website
+            window.location.href = "https://www.your-destination-website.com";
+        });
+      });
+    </script>
+  </head>
+  
+  <body>
+    <!-- 4. Set up the AR Scene and point it to your downloaded .mind file -->
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      
+      <!-- 5. This is the invisible tracker in the scene that Javascript listens to -->
+      <a-entity id="my-image-target" mindar-image-target="targetIndex: 0"></a-entity>
+      
+    </a-scene>
+  </body>
+</html>
